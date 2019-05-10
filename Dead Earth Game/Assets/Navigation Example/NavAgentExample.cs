@@ -11,6 +11,7 @@ public class NavAgentExample : MonoBehaviour
     public bool HasPath = false;
     public bool PathPending = false;
     public bool PathStale = false;
+    public NavMeshPathStatus PathStatus = NavMeshPathStatus.PathInvalid;
 
     private NavMeshAgent _NavAgent = null;
 
@@ -49,19 +50,22 @@ public class NavAgentExample : MonoBehaviour
     }
 
     // Update is called once per frame
+
     void Update()
     {
+        // Copy NavMeshAgents state into inspector visible variables
         HasPath = _NavAgent.hasPath;
         PathPending = _NavAgent.pathPending;
+        PathStale = _NavAgent.isPathStale;
+        PathStatus = _NavAgent.pathStatus;
 
-        if(!HasPath && !PathPending)
-        {
+        // If we don't have a path and one isn't pending then set the next
+        // waypoint as the target, otherwise if path is stale regenerate path
+        if ((!HasPath && !PathPending) || PathStatus == NavMeshPathStatus.PathInvalid /*|| PathStatus==NavMeshPathStatus.PathPartial*/)
             SetNextDestination(true);
-        }
-
+        else
         if (_NavAgent.isPathStale)
-        {
             SetNextDestination(false);
-        }
+
     }
 }
