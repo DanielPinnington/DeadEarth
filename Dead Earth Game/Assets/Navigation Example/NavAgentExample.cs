@@ -65,7 +65,7 @@ public class NavAgentExample : MonoBehaviour
         // waypoint as the target, otherwise if path is stale regenerate path
         if (_NavAgent.isOnOffMeshLink)
         {
-            StartCoroutine(Jump(2.0f));
+            StartCoroutine(Jump(1.0f)); //Time of the jump in the air
         }
         if ((_NavAgent.remainingDistance <= _NavAgent.stoppingDistance && !PathPending) || PathStatus == NavMeshPathStatus.PathInvalid /*|| PathStatus==NavMeshPathStatus.PathPartial*/)
             SetNextDestination(true);
@@ -85,7 +85,7 @@ public class NavAgentExample : MonoBehaviour
         while(time <= duration)
         {
             float t = time / duration;
-            _NavAgent.transform.position = Vector3.Lerp(startPos, endPos, t) + JumpCurve.Evaluate(t) * Vector3.up;
+            _NavAgent.transform.position = Vector3.Lerp(startPos, endPos, t) + (JumpCurve.Evaluate(t) * Vector3.up);
             time += Time.deltaTime;
             yield return null;
         }
