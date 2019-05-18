@@ -332,6 +332,32 @@ Transform:
   m_Father: {fileID: 42857316}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &566684822 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4341065987587142778, guid: d70e66c4ad591a54797f72490726d8a1,
+    type: 3}
+  m_PrefabInstance: {fileID: 1338501436}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &647300539 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 183038, guid: 22e8e9479d52a604abc938e32f8c8873,
+    type: 3}
+  m_PrefabInstance: {fileID: 737155898}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &647300545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 647300539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55b13c9f9b2643e44beab0ff6735c05e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Mount: {fileID: 1707899300}
+  speed: 5
 --- !u!1001 &737155898
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2119,6 +2145,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1707899299
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1707899300}
+  m_Layer: 0
+  m_Name: HipCam
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1707899300
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707899299}
+  m_LocalRotation: {x: 0.30077744, y: -0.00000019879943, z: -0.000000006356629, w: 0.9536944}
+  m_LocalPosition: {x: 0.75, y: 3.91, z: -4.37}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 566684822}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 35.009003, y: 0, z: 0}
 --- !u!1 &1848537603
 GameObject:
   m_ObjectHideFlags: 0
