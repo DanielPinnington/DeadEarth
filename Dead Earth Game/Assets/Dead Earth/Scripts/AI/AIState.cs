@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.AI;
 
 // ----------------------------------------------------------------------
 // Class	:	AIState
@@ -70,5 +71,20 @@ public abstract class AIState : MonoBehaviour
                             col.radius * col.transform.lossyScale.y);
 
         radius = Mathf.Max(radius, col.radius * col.transform.lossyScale.z);
+    }
+
+    // -----------------------------------------------------------------------
+    // Name	:	FindSignedAngle
+    // Desc	:	Returns the signed angle between to vectors (in degrees)
+    // -----------------------------------------------------------------------
+    public static float FindSignedAngle(Vector3 fromVector, Vector3 toVector)
+    {
+        if (fromVector == toVector)
+            return 0.0f;
+
+        float angle = Vector3.Angle(fromVector, toVector);
+        Vector3 cross = Vector3.Cross(fromVector, toVector);
+        angle *= Mathf.Sign(cross.y);
+        return angle;
     }
 }

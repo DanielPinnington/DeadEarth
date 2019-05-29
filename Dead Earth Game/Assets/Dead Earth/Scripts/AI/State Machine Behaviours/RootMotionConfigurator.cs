@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class RootMotionConfigurator : AIStateMachineLink
 {
@@ -12,14 +13,14 @@ public class RootMotionConfigurator : AIStateMachineLink
         if (_stateMachine)
         {
             Debug.Log(_stateMachine.ToString());
-            _stateMachine.AddRouteMotionRequest(_rootPosition, _rootRotation);
+            _stateMachine.AddRootMotionRequest(_rootPosition, _rootRotation);
         }
     }
 
     public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (_stateMachine)
-            _stateMachine.AddRouteMotionRequest(-_rootPosition, -_rootRotation);
+            _stateMachine.AddRootMotionRequest(-_rootPosition, -_rootRotation);
     }
 
 }
