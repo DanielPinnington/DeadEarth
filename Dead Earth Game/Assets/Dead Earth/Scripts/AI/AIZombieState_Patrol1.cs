@@ -30,8 +30,7 @@ public class AIZombieState_Patrol1 : AIZombieState
     // ------------------------------------------------------------------
     // Name	:	OnEnterState
     // Desc	:	Called by the State Machine when first transitioned into
-    //			this state. It initializes a timer and configures the
-    //			the state machine
+    //			this state. It initializes the state machine
     // ------------------------------------------------------------------
     public override void OnEnterState()
     {
@@ -226,12 +225,12 @@ public class AIZombieState_Patrol1 : AIZombieState
     // Name	:	OnAnimatorIKUpdated
     // Desc	:	Override IK Goals
     // -----------------------------------------------------------------------
-    public override void OnAnimatorIKUpdated()
-    {
-        if (_zombieStateMachine == null)
-            return;
+    /*public override void 		OnAnimatorIKUpdated()	
+	{
+		if (_zombieStateMachine == null)
+			return;
 
-        _zombieStateMachine.animator.SetLookAtPosition(_zombieStateMachine.targetPosition + Vector3.up);
-        _zombieStateMachine.animator.SetLookAtWeight(0.55f);
-    }
+		_zombieStateMachine.animator.SetLookAtPosition ( _zombieStateMachine.targetPosition + Vector3.up );
+		_zombieStateMachine.animator.SetLookAtWeight (0.55f );
+	}*/
 }

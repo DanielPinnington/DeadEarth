@@ -64,7 +64,7 @@ public abstract class AIState : MonoBehaviour
         pos = col.transform.position;
         pos.x += col.center.x * col.transform.lossyScale.x;
         pos.y += col.center.y * col.transform.lossyScale.y;
-        pos.y += col.center.z * col.transform.lossyScale.z;
+        pos.z += col.center.z * col.transform.lossyScale.z;
 
         // Calculate world space radius of sphere
         radius = Mathf.Max(col.radius * col.transform.lossyScale.x,
