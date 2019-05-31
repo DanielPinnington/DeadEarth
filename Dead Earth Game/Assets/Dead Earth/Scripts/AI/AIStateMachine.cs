@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.AI;
 
 // Public Enums of the AI System
 public enum AIStateType { None, Idle, Alerted, Patrol, Attack, Feeding, Pursuit, Dead }
@@ -61,23 +60,28 @@ public abstract class AIStateMachine : MonoBehaviour
     protected AITarget _target = new AITarget();
     protected int _rootPositionRefCount = 0;
     protected int _rootRotationRefCount = 0;
+    protected bool _isTargetReached = false;
 
     // Protected Inspector Assigned
     [SerializeField] protected AIStateType _currentStateType = AIStateType.Idle;
     [SerializeField] protected SphereCollider _targetTrigger = null;
     [SerializeField] protected SphereCollider _sensorTrigger = null;
-
+    [SerializeField] protected AIWaypointNetwork _waypointNetwork = null;
+    [SerializeField] protected bool _randomPatrol = false;
+    [SerializeField] protected int _currentWaypoint = -1;
     [SerializeField] [Range(0, 15)] protected float _stoppingDistance = 1.0f;
 
     // Component Cache
     protected Animator _animator = null;
-    protected NavMeshAgent _navAgent = null;
+    protected UnityEngine.AI.NavMeshAgent _navAgent = null;
     protected Collider _collider = null;
     protected Transform _transform = null;
 
     // Public Properties
+    public bool isTargetReached { get { return _isTargetReached; } }
+    public bool inMeleeRange { get; set; }
     public Animator animator { get { return _animator; } }
-    public NavMeshAgent navAgent { get { return _navAgent; } }
+    public UnityEngine.AI.NavMeshAgent navAgent { get { return _navAgent; } }
     public Vector3 sensorPosition
     {
         get
@@ -107,6 +111,16 @@ public abstract class AIStateMachine : MonoBehaviour
     public bool useRootRotation { get { return _rootRotationRefCount > 0; } }
     public AITargetType targetType { get { return _target.type; } }
     public Vector3 targetPosition { get { return _target.position; } }
+    public int targetColliderID
+    {
+        get
+        {
+            if (_target.collider)
+                return _target.collider.GetInstanceID();
+            else
+                return -1;
+        }
+    }
 
     // -----------------------------------------------------------------
     // Name	:	Awake
@@ -117,7 +131,7 @@ public abstract class AIStateMachine : MonoBehaviour
         // Cache all frequently accessed components
         _transform = transform;
         _animator = GetComponent<Animator>();
-        _navAgent = GetComponent<NavMeshAgent>();
+        _navAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         _collider = GetComponent<Collider>();
 
         // Do we have a valid Game Scene Manager
@@ -186,6 +200,67 @@ public abstract class AIStateMachine : MonoBehaviour
         }
     }
 
+
+    // -----------------------------------------------------------------------------
+    // Name	:	GetWaypointPosition
+    // Desc	:	Fetched the world space position of the state machine's currently
+    //			set waypoint with optional increment
+    // -----------------------------------------------------------------------------
+    public Vector3 GetWaypointPosition(bool increment)
+    {
+        if (_currentWaypoint == -1)
+        {
+            if (_randomPatrol)
+                _currentWaypoint = Random.Range(0, _waypointNetwork.Waypoints.Count);
+            else
+                _currentWaypoint = 0;
+        }
+        else if (increment)
+            NextWaypoint();
+
+        // Fetch the new waypoint from the waypoint list
+        if (_waypointNetwork.Waypoints[_currentWaypoint] != null)
+        {
+            Transform newWaypoint = _waypointNetwork.Waypoints[_currentWaypoint];
+
+            // This is our new target position
+            SetTarget(AITargetType.Waypoint,
+                        null,
+                        newWaypoint.position,
+                        Vector3.Distance(newWaypoint.position, transform.position));
+
+            return newWaypoint.position;
+        }
+
+        return Vector3.zero;
+    }
+
+    // -------------------------------------------------------------------------
+    // Name	:	NextWaypoint
+    // Desc	:	Called to select a new waypoint. Either randomly selects a new
+    //			waypoint from the waypoint network or increments the current
+    //			waypoint index (with wrap-around) to visit the waypoints in
+    //			the network in sequence. Sets the new waypoint as the the
+    //			target and generates a nav agent path for it
+    // -------------------------------------------------------------------------
+    private void NextWaypoint()
+    {
+        // Increase the current waypoint with wrap-around to zero (or choose a random waypoint)
+        if (_randomPatrol && _waypointNetwork.Waypoints.Count > 1)
+        {
+            // Keep generating random waypoint until we find one that isn't the current one
+            // NOTE: Very important that waypoint networks do not only have one waypoint :)
+            int oldWaypoint = _currentWaypoint;
+            while (_currentWaypoint == oldWaypoint)
+            {
+                _currentWaypoint = Random.Range(0, _waypointNetwork.Waypoints.Count);
+            }
+        }
+        else
+            _currentWaypoint = _currentWaypoint == _waypointNetwork.Waypoints.Count - 1 ? 0 : _currentWaypoint + 1;
+
+
+    }
     // -------------------------------------------------------------------
     // Name :	SetTarget (Overload)
     // Desc	:	Sets the current target and configures the target trigger
@@ -273,6 +348,8 @@ public abstract class AIStateMachine : MonoBehaviour
         {
             _target.distance = Vector3.Distance(_transform.position, _target.position);
         }
+
+        _isTargetReached = false;
     }
 
     // -------------------------------------------------------------------
@@ -317,9 +394,18 @@ public abstract class AIStateMachine : MonoBehaviour
     {
         if (_targetTrigger == null || other != _targetTrigger) return;
 
+        _isTargetReached = true;
+
         // Notify Child State
         if (_currentState)
             _currentState.OnDestinationReached(true);
+    }
+
+    protected virtual void OnTriggerStay(Collider other)
+    {
+        if (_targetTrigger == null || other != _targetTrigger) return;
+
+        _isTargetReached = true;
     }
 
     // --------------------------------------------------------------------------
@@ -328,9 +414,12 @@ public abstract class AIStateMachine : MonoBehaviour
     //				its destination (typically true when a new target has been
     //				set by the child.
     // --------------------------------------------------------------------------
-    public void OnTriggerExit(Collider other)
+    protected void OnTriggerExit(Collider other)
     {
         if (_targetTrigger == null || _targetTrigger != other) return;
+
+        _isTargetReached = false;
+
         if (_currentState != null)
             _currentState.OnDestinationReached(false);
     }

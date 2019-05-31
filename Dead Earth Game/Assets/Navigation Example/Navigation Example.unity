@@ -368,7 +368,7 @@ MonoBehaviour:
   _currentWaypoint: 0
   _turnOnSpotThreshold: 90
   _slerpSpeed: 5
-  _speed: 3
+  _speed: 1
 --- !u!114 &95522272
 MonoBehaviour:
   m_ObjectHideFlags: 0
