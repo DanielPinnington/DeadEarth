@@ -38,7 +38,6 @@ public class AIZombieState_Patrol1 : AIZombieState
 
         // Configure State Machine
         _zombieStateMachine.NavAgentControl(true, false);
-        _zombieStateMachine.speed = _speed;
         _zombieStateMachine.seeking = 0;
         _zombieStateMachine.feeding = false;
         _zombieStateMachine.attackType = 0;
@@ -91,6 +90,15 @@ public class AIZombieState_Patrol1 : AIZombieState
                 return AIStateType.Pursuit;
             }
         }
+
+        // If path is still be computed then wait
+        if (_zombieStateMachine.navAgent.pathPending)
+        {
+            _zombieStateMachine.speed = 0;
+            return AIStateType.Patrol;
+        }
+        else
+            _zombieStateMachine.speed = _speed;
 
         // Calculate angle we need to turn through to be facing our target
         float angle = Vector3.Angle(_zombieStateMachine.transform.forward, (_zombieStateMachine.navAgent.steeringTarget - _zombieStateMachine.transform.position));

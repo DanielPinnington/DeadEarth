@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.AI;
 
 // Public Enums of the AI System
 public enum AIStateType { None, Idle, Alerted, Patrol, Attack, Feeding, Pursuit, Dead }
@@ -73,7 +74,7 @@ public abstract class AIStateMachine : MonoBehaviour
 
     // Component Cache
     protected Animator _animator = null;
-    protected UnityEngine.AI.NavMeshAgent _navAgent = null;
+    protected NavMeshAgent _navAgent = null;
     protected Collider _collider = null;
     protected Transform _transform = null;
 
@@ -81,7 +82,7 @@ public abstract class AIStateMachine : MonoBehaviour
     public bool isTargetReached { get { return _isTargetReached; } }
     public bool inMeleeRange { get; set; }
     public Animator animator { get { return _animator; } }
-    public UnityEngine.AI.NavMeshAgent navAgent { get { return _navAgent; } }
+    public NavMeshAgent navAgent { get { return _navAgent; } }
     public Vector3 sensorPosition
     {
         get
@@ -131,7 +132,7 @@ public abstract class AIStateMachine : MonoBehaviour
         // Cache all frequently accessed components
         _transform = transform;
         _animator = GetComponent<Animator>();
-        _navAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        _navAgent = GetComponent<NavMeshAgent>();
         _collider = GetComponent<Collider>();
 
         // Do we have a valid Game Scene Manager
