@@ -1,10 +1,17 @@
-﻿using System.Collections;
+﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
+// -------------------------------------------------------------------------
+// CLASS	:	GameSceneManager
+// Desc		:	Singleton class that acts as the scene database
+// -------------------------------------------------------------------------
 public class GameSceneManager : MonoBehaviour
 {
-    //Statics
+    // Inspector Assigned Variables
+    [SerializeField] private ParticleSystem _bloodParticles = null;
+
+    // Statics
     private static GameSceneManager _instance = null;
     public static GameSceneManager instance
     {
@@ -15,10 +22,19 @@ public class GameSceneManager : MonoBehaviour
             return _instance;
         }
     }
-    //private 
+
+    // Private
     private Dictionary<int, AIStateMachine> _stateMachines = new Dictionary<int, AIStateMachine>();
 
-    //Public Methods
+    // Properties
+    public ParticleSystem bloodParticles { get { return _bloodParticles; } }
+
+    // Public Methods
+    // --------------------------------------------------------------------
+    // Name	:	RegisterAIStateMachine
+    // Desc	:	Stores the passed state machine in the dictionary with
+    //			the supplied key
+    // --------------------------------------------------------------------
     public void RegisterAIStateMachine(int key, AIStateMachine stateMachine)
     {
         if (!_stateMachines.ContainsKey(key))
@@ -26,13 +42,22 @@ public class GameSceneManager : MonoBehaviour
             _stateMachines[key] = stateMachine;
         }
     }
+
+    // --------------------------------------------------------------------
+    // Name	:	GetAIStateMachine
+    // Desc	:	Returns an AI State Machine reference searched on by the
+    //			instance ID of an object
+    // --------------------------------------------------------------------
     public AIStateMachine GetAIStateMachine(int key)
     {
         AIStateMachine machine = null;
-        if(_stateMachines.TryGetValue(key, out machine))
+        if (_stateMachines.TryGetValue(key, out machine))
         {
             return machine;
         }
+
         return null;
     }
+
+
 }
