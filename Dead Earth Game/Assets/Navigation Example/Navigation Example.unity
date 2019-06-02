@@ -502,13 +502,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 100560659}
-  m_LocalRotation: {x: 2.7105054e-20, y: 1, z: 5.2049645e-18, w: 3.5575384e-19}
-  m_LocalPosition: {x: -0.01, y: -0.045, z: 0.178}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
+  m_LocalPosition: {x: -0.01, y: -0.045, z: -0.325}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1835636456}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!1 &162695799
 GameObject:
   m_ObjectHideFlags: 0
@@ -702,7 +702,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1
+      scalar: 3
       minScalar: 0.3
       maxCurve:
         serializedVersion: 2
@@ -755,8 +755,8 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1.7
-      minScalar: 5
+      scalar: 0.9
+      minScalar: 0.5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -871,7 +871,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.2
+      scalar: 0.29
       minScalar: 0.09
       maxCurve:
         serializedVersion: 2
@@ -5285,7 +5285,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 350406451}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -19.685, y: 1.767, z: 25.709}
+  m_LocalPosition: {x: -19.685, y: 1.767, z: 25.687}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -7406,6 +7406,28 @@ Transform:
   m_Father: {fileID: 566684822}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 35.009003, y: 0, z: 0}
+--- !u!1 &1818363408 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9065906238872704453, guid: d70e66c4ad591a54797f72490726d8a1,
+    type: 3}
+  m_PrefabInstance: {fileID: 1338501436}
+  m_PrefabAsset: {fileID: 0}
+--- !u!208 &1818363409
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1818363408}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.5, y: 1, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: -0.54, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!4 &1835636456 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1707243787577406375, guid: d70e66c4ad591a54797f72490726d8a1,
