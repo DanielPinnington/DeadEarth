@@ -181,7 +181,7 @@ public class AIZombieStateMachine : AIStateMachine
 
         }
 
-        _satisfaction = Mathf.Max(0, _satisfaction - ((_depletionRate * Time.deltaTime) / 100.0f) * Mathf.Pow(_speed, 3.0f));
+        _satisfaction = Mathf.Max(0, _satisfaction - ((_depletionRate * Time.deltaTime) / 100.0f) * Mathf.Pow(_speed, 3.0f)); //Satisfaction depletion rate
     }
 }
 
