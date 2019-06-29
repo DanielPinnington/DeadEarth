@@ -129,6 +129,7 @@ public class FPSController : MonoBehaviour
     [SerializeField] private GameObject _flashLight = null;
 
     // Use Standard Assets Mouse Look class for mouse input -> Camera Look Control
+    //This is how to move MouseLook
     [SerializeField] private UnityStandardAssets.Characters.FirstPerson.MouseLook _mouseLook = new UnityStandardAssets.Characters.FirstPerson.MouseLook();
 
     // Private internals
@@ -171,7 +172,7 @@ public class FPSController : MonoBehaviour
         // Reset timers
         _fallingTimer = 0.0f;
 
-        // Setup Mouse Look Script
+        // Setup Mouse Look Script (MouseLook from Standard Assets, move camera attached to character)
         _mouseLook.Init(transform, _camera.transform);
 
         // Initiate Head Bob Object

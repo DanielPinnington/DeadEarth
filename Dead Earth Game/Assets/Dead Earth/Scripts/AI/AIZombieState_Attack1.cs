@@ -6,6 +6,7 @@ public class AIZombieState_Attack1 : AIZombieState
     // Inspector Assigned
     [SerializeField] [Range(0, 10)] float _speed = 0.0f;
     [SerializeField] [Range(0.0f, 1.0f)] float _lookAtWeight = 0.7f;
+    [SerializeField] float _stoppingDistance = 1.0f;
     [SerializeField] [Range(0.0f, 90.0f)] float _lookAtAngleThreshold = 15.0f;
     [SerializeField] float _slerpSpeed = 5.0f;
 
@@ -48,6 +49,10 @@ public class AIZombieState_Attack1 : AIZombieState
         Vector3 targetPos;
         Quaternion newRot;
 
+        if (Vector3.Distance(_zombieStateMachine.transform.position, _zombieStateMachine.targetPosition) < _stoppingDistance)
+            _zombieStateMachine.speed = 0;
+        else
+            _zombieStateMachine.speed = _speed;
         // Do we have a visual threat that is the player
         if (_zombieStateMachine.VisualThreat.type == AITargetType.Visual_Player)
         {
