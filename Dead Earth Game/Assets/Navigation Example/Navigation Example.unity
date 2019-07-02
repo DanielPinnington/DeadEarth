@@ -657,7 +657,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bloodTexture: {fileID: 2800000, guid: 3638c8cd4ece14946b485b17a9775433, type: 3}
   _bloodNormalMap: {fileID: 2800000, guid: 03438d0af968c5641aa6640c025031d6, type: 3}
-  _bloodAmount: 0.7219445
+  _bloodAmount: 0
   _minBloodAmount: 0
   _distortion: 0.21
   _autoFade: 1
@@ -9428,6 +9428,7 @@ GameObject:
   - component: {fileID: 1651847000}
   - component: {fileID: 1651846999}
   - component: {fileID: 1651847001}
+  - component: {fileID: 1651847002}
   m_Layer: 11
   m_Name: FPS Controller Rig
   m_TagString: Player
@@ -9765,6 +9766,22 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!114 &1651847002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1651846995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7878e41669453547a8078d4e9a311ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _meleeTrigger: {fileID: 1076021534}
+  _cameraBloodEffect: {fileID: 231121271}
+  _camera: {fileID: 231121269}
+  _health: 100
 --- !u!1 &1671144428
 GameObject:
   m_ObjectHideFlags: 0

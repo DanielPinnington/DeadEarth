@@ -2,6 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 
+public class PlayerInfo
+{
+    public Collider collider = null;
+    public CharacterManager characterManager = null;
+    public Camera camera = null;
+    public CapsuleCollider meleeTrigger = null;
+}
+
 // -------------------------------------------------------------------------
 // CLASS	:	GameSceneManager
 // Desc		:	Singleton class that acts as the scene database
@@ -25,6 +33,7 @@ public class GameSceneManager : MonoBehaviour
 
     // Private
     private Dictionary<int, AIStateMachine> _stateMachines = new Dictionary<int, AIStateMachine>();
+    private Dictionary<int, PlayerInfo> _playerInfos = new Dictionary<int, PlayerInfo>();
 
     // Properties
     public ParticleSystem bloodParticles { get { return _bloodParticles; } }
@@ -59,5 +68,32 @@ public class GameSceneManager : MonoBehaviour
         return null;
     }
 
+    // --------------------------------------------------------------------
+    // Name	:	RegisterPlayerInfo
+    // Desc	:	Stores the passed PlayerInfo in the dictionary with
+    //			the supplied key
+    // --------------------------------------------------------------------
+    public void RegisterPlayerInfo(int key, PlayerInfo playerInfo)
+    {
+        if (!_playerInfos.ContainsKey(key))
+        {
+            _playerInfos[key] = playerInfo;
+        }
+    }
 
+    // --------------------------------------------------------------------
+    // Name	:	GetPlayerInfo
+    // Desc	:	Returns a PlayerInfo reference searched on by the
+    //			instance ID of an object
+    // --------------------------------------------------------------------
+    public PlayerInfo GetPlayerInfo(int key)
+    {
+        PlayerInfo info = null;
+        if (_playerInfos.TryGetValue(key, out info))
+        {
+            return info;
+        }
+
+        return null;
+    }
 }
