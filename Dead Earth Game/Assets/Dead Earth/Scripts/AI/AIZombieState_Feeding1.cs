@@ -4,10 +4,16 @@ using System.Collections;
 public class AIZombieState_Feeding1 : AIZombieState
 {
     // Inspector Assigned Variabled
-    [SerializeField] float _slerpSpeed = 5.0f;
-    [SerializeField] Transform _bloodParticlesMount = null;
-    [SerializeField] [Range(0.01f, 1.0f)] float _bloodParticlesBurstTime = 0.1f;
-    [SerializeField] [Range(1, 100)] int _bloodParticlesBurstAmount = 10;
+    [SerializeField]
+    float _slerpSpeed = 5.0f;
+    [SerializeField]
+    Transform _bloodParticlesMount = null;
+    [SerializeField]
+    [Range(0.01f, 1.0f)]
+    float _bloodParticlesBurstTime = 0.1f;
+    [SerializeField]
+    [Range(1, 100)]
+    int _bloodParticlesBurstAmount = 10;
 
     // Private Fields
     private int _eatingStateHash = Animator.StringToHash("Feeding State");
@@ -85,7 +91,8 @@ public class AIZombieState_Feeding1 : AIZombieState
                     ParticleSystem system = GameSceneManager.instance.bloodParticles;
                     system.transform.position = _bloodParticlesMount.transform.position;
                     system.transform.rotation = _bloodParticlesMount.transform.rotation;
-                    system.simulationSpace = ParticleSystemSimulationSpace.World;
+                    var settings = system.main;
+                    settings.simulationSpace = ParticleSystemSimulationSpace.World;
                     system.Emit(_bloodParticlesBurstAmount);
                     _timer = 0.0f;
                 }

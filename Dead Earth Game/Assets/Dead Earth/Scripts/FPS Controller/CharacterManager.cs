@@ -8,12 +8,17 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] private CameraBloodEffect _cameraBloodEffect = null;
     [SerializeField] private Camera _camera = null;
     [SerializeField] private float _health = 100.0f;
+    [SerializeField] private int _ammo = 6;
+
+    public AudioSource _shootSound = null;
+    public AudioSource _emptyGun = null;
 
     // Private
     private Collider _collider = null;
     private FPSController _fpsController = null;
     private CharacterController _characterController = null;
     private GameSceneManager _gameSceneManager = null;
+    private int _aiBodyPartLayer = -1;
 
     // Use this for initialization
     void Start()
@@ -22,6 +27,8 @@ public class CharacterManager : MonoBehaviour
         _fpsController = GetComponent<FPSController>();
         _characterController = GetComponent<CharacterController>();
         _gameSceneManager = GameSceneManager.instance;
+
+        _aiBodyPartLayer = LayerMask.NameToLayer("AI Body Part");
 
         if (_gameSceneManager != null)
         {
@@ -44,4 +51,52 @@ public class CharacterManager : MonoBehaviour
             _cameraBloodEffect.bloodAmount = Mathf.Min(_cameraBloodEffect.minBloodAmount + 0.3f, 1.0f);
         }
     }
+
+    public void DoDamage(int hitDirection = 0)
+    {
+        if (_camera == null) return;
+        if (_gameSceneManager == null) return;
+
+        // Local Variables
+        Ray ray;
+        RaycastHit hit;
+        bool isSomethingHit = false;
+
+        ray = _camera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+
+        isSomethingHit = Physics.Raycast(ray, out hit, 1000.0f, 1 << _aiBodyPartLayer);
+
+        if (isSomethingHit)
+        {
+            AIStateMachine stateMachine = _gameSceneManager.GetAIStateMachine(hit.rigidbody.GetInstanceID());
+            Debug.Log("Body part is: " + hit.rigidbody.GetInstanceID());
+            if (stateMachine)
+            {
+                Debug.Log("This has worked");
+                stateMachine.TakeDamage(hit.point, ray.direction * 1.0f, 25, hit.rigidbody, this, 0);
+            }
+        }
+
+    }
+
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0) && _ammo > 0)
+        {
+            if (_ammo >= 0)
+            {
+                _ammo -= 1;
+                _shootSound.Play();
+                DoDamage();
+            }
+            //_shootSound.Play();
+            //DoDamage();
+            print("" + _ammo);
+        }
+        if (Input.GetMouseButtonDown(0) && _ammo <= 0)
+        {
+            _emptyGun.Play();
+        }
+    }
 }
+
