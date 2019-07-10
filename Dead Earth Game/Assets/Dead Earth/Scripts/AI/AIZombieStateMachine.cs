@@ -88,11 +88,18 @@ public class AIZombieStateMachine : AIStateMachine
         bool shouldRagdoll = (hitStrength > 1.0f);
         if (health <= 0) shouldRagdoll = true;
 
-        if (_navAgent)
-            _navAgent.speed = 0;
+        //if (_navAgent)
+        //    _navAgent.speed = 0;
 
         if (shouldRagdoll)
         {
+            if (_currentState)
+            {
+                _currentState.OnExitState();
+                _currentState = null;
+                _currentStateType = AIStateType.None;
+            }
+
             if (_navAgent) _navAgent.enabled = false;
             if (_animator) _animator.enabled = false;
             if (_collider) _collider.enabled = false;

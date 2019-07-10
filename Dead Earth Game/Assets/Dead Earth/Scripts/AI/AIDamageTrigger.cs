@@ -51,8 +51,8 @@ public class AIDamageTrigger : MonoBehaviour
                 ParticleSystem system = GameSceneManager.instance.bloodParticles;
 
                 // Temporary Code
-                system.transform.position = transform.position;
-                system.transform.rotation = Camera.main.transform.rotation;
+                //system.transform.position = transform.position;
+                //system.transform.rotation = Camera.main.transform.rotation;
 
                 system.simulationSpace = ParticleSystemSimulationSpace.World;
                 system.Emit(_bloodParticlesBurstAmount);

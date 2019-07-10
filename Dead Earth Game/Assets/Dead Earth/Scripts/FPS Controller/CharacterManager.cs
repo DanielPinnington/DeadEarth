@@ -9,9 +9,11 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] private Camera _camera = null;
     [SerializeField] private float _health = 100.0f;
     [SerializeField] private int _ammo = 6;
+    [SerializeField] private int _maxAmmo = 6;
 
     public AudioSource _shootSound = null;
     public AudioSource _emptyGun = null;
+    public AudioSource _reloadGun = null;
 
     // Private
     private Collider _collider = null;
@@ -91,12 +93,18 @@ public class CharacterManager : MonoBehaviour
             }
             //_shootSound.Play();
             //DoDamage();
-            print("" + _ammo);
         }
         if (Input.GetMouseButtonDown(0) && _ammo <= 0)
         {
             _emptyGun.Play();
         }
+        if (Input.GetKeyDown("r") && _ammo <= 5 && _ammo >= 0)
+        {
+            _reloadGun.Play();
+            _ammo = _maxAmmo;
+            print("Bullets currently: " + _ammo);
+        }
+        Debug.Log("" + _ammo);
     }
 }
 
