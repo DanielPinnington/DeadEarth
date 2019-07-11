@@ -64,6 +64,7 @@ public abstract class AIStateMachine : MonoBehaviour
     protected bool _isTargetReached = false;
     protected List<Rigidbody> _bodyParts = new List<Rigidbody>();
     protected int _aiBodyPartLayer = -1;
+    protected bool _cinematicEnabled = false;
 
     // Protected Inspector Assigned
     [SerializeField] protected AIStateType _currentStateType = AIStateType.Idle;
@@ -125,6 +126,11 @@ public abstract class AIStateMachine : MonoBehaviour
             else
                 return -1;
         }
+    }
+    public bool cinematicEnabled
+    {
+        get { return _cinematicEnabled; }
+        set { _cinematicEnabled = value; }
     }
 
     // -----------------------------------------------------------------
