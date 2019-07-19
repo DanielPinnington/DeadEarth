@@ -7,6 +7,7 @@ using System.Collections.Generic;
 public enum AIStateType { None, Idle, Alerted, Patrol, Attack, Feeding, Pursuit, Dead }
 public enum AITargetType { None, Waypoint, Visual_Player, Visual_Light, Visual_Food, Audio }
 public enum AITriggerEventType { Enter, Stay, Exit }
+public enum AIBoneAlignmentType { XAxis, YAxis, ZAxis, XAxisInverted, YAxisInverted, ZAxisInverted }
 
 // ----------------------------------------------------------------------
 // Class	:	AITarget
@@ -68,13 +69,15 @@ public abstract class AIStateMachine : MonoBehaviour
 
     // Protected Inspector Assigned
     [SerializeField] protected AIStateType _currentStateType = AIStateType.Idle;
-    [SerializeField] Transform _rootBone = null;
+    [SerializeField] protected Transform _rootBone = null;
+    [SerializeField] protected AIBoneAlignmentType _rootBoneAlignment = AIBoneAlignmentType.ZAxis;
     [SerializeField] protected SphereCollider _targetTrigger = null;
     [SerializeField] protected SphereCollider _sensorTrigger = null;
     [SerializeField] protected AIWaypointNetwork _waypointNetwork = null;
     [SerializeField] protected bool _randomPatrol = false;
     [SerializeField] protected int _currentWaypoint = -1;
-    [SerializeField] [Range(0, 15)] protected float _stoppingDistance = 1.0f;
+    [SerializeField]
+    [Range(0, 15)] protected float _stoppingDistance = 1.0f;
 
 
     // Component Cache
@@ -386,6 +389,8 @@ public abstract class AIStateMachine : MonoBehaviour
     // -------------------------------------------------------------------
     protected virtual void Update()
     {
+        //Debug.Log("Root Position Ref Count "+_rootPositionRefCount);
+
         if (_currentState == null) return;
 
         AIStateType newStateType = _currentState.OnUpdate();
@@ -510,6 +515,8 @@ public abstract class AIStateMachine : MonoBehaviour
     {
         _rootPositionRefCount += rootPosition;
         _rootRotationRefCount += rootRotation;
+
+        Debug.Log("Adding Root Motion Request " + rootPosition + "   and    " + rootRotation);
     }
 
 

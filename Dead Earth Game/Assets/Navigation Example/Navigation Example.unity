@@ -220,14 +220,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentStateType: 1
   _rootBone: {fileID: 566684822}
+  _rootBoneAlignment: 2
   _targetTrigger: {fileID: 720170472}
   _sensorTrigger: {fileID: 98654714}
   _waypointNetwork: {fileID: 1671144429}
   _randomPatrol: 0
   _currentWaypoint: -1
   _stoppingDistance: 1
-  _fov: 120
-  _sight: 0.5
+  _fov: 180
+  _sight: 1
   _hearing: 1
   _aggression: 0.5
   _health: 100
@@ -235,11 +236,16 @@ MonoBehaviour:
   _upperBodyDamage: 0
   _upperBodyThreshold: 30
   _limpThreshold: 30
-  _crawlThreshold: 80
+  _crawlThreshold: 90
   _intelligence: 1
-  _satisfaction: 0.048
+  _satisfaction: 0.249
   _replenishRate: 0.5
   _depletionRate: 0.1
+  _reanimationBlendTime: 1.5
+  _reanimationWaitTime: 3
+  _geometryLayers:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!4 &95522265 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: d70e66c4ad591a54797f72490726d8a1,
@@ -347,7 +353,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 549ef56c8839f8349bbef8e1788e5be6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _idleTimeRange: {x: 2, y: 5}
+  _idleTimeRange: {x: 10, y: 60}
 --- !u!114 &95522271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -360,7 +366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e610151551f53ac4e9210e261999135f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turnOnSpotThreshold: 90
+  _turnOnSpotThreshold: 80
   _slerpSpeed: 5
   _speed: 1
 --- !u!114 &95522272
@@ -375,10 +381,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29974dc3542ebd544bb8ae8755e966bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxDuration: 3
-  _waypointAngleThreshold: 25
-  _threatAngleThreshold: 10
-  _directionChangeTime: 1.5
+  _maxDuration: 10
+  _waypointAngleThreshold: 90
+  _threatAngleThreshold: 90
+  _directionChangeTime: 1
 --- !u!114 &95522273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -431,7 +437,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 0
   _lookAtWeight: 0.7
-  _stoppingDistance: 1.2
+  _stoppingDistance: 2
   _lookAtAngleThreshold: 15
   _slerpSpeed: 5
 --- !u!1 &98654712
@@ -652,7 +658,7 @@ MonoBehaviour:
   _bloodNormalMap: {fileID: 2800000, guid: 03438d0af968c5641aa6640c025031d6, type: 3}
   _bloodAmount: 0
   _minBloodAmount: 0
-  _distortion: 0.21
+  _distortion: 1
   _autoFade: 1
   _fadeSpeed: 0.05
   _shader: {fileID: 4800000, guid: 3efd06d2f2d6a3544a86d77e9b0833a1, type: 3}
@@ -5631,7 +5637,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parameter: LeftHand
   _bloodParticlesBurstAmount: 10
-  _damageAmount: 30
+  _damageAmount: 0.1
 --- !u!135 &722478001
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -10605,7 +10611,7 @@ MonoBehaviour:
   AudioSources:
   - {fileID: 1651847000}
   - {fileID: 1651846999}
-  _walkSpeed: 1
+  _walkSpeed: 2
   _runSpeed: 4.5
   _jumpSpeed: 7.5
   _crouchSpeed: 1
@@ -11224,9 +11230,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9592e442c659812458bb7eb95b2ba433, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DisplayMode: 2
+  DisplayMode: 1
   UIStart: 0
-  UIEnd: 1
+  UIEnd: 0
   Waypoints:
   - {fileID: 1431372974}
   - {fileID: 484237689}
@@ -11298,7 +11304,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parameter: RightHand
   _bloodParticlesBurstAmount: 10
-  _damageAmount: 20
+  _damageAmount: 0.1
 --- !u!135 &1777912988
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -11682,9 +11688,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 229c1f8dd232eaf45a3f0f538d6b186e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _parameter: Mouth
+  _parameter: Head
   _bloodParticlesBurstAmount: 10
-  _damageAmount: 10
+  _damageAmount: 0.1
 --- !u!1 &2145112172
 GameObject:
   m_ObjectHideFlags: 0
