@@ -73,6 +73,7 @@ public enum AIBoneControlType { Animated, Ragdoll, RagdollToAnim }
         private int _upperBodyDamageHash = Animator.StringToHash("Upper Body Damage");
         private int _reanimateFromBackHash = Animator.StringToHash("Reanimate From Back");
         private int _reanimateFromFrontHash = Animator.StringToHash("Reanimate From Front");
+        private int _stateHash = Animator.StringToHash("State");
 
         // Public Properties
         public float replenishRate { get { return _replenishRate; } }
@@ -131,6 +132,7 @@ public enum AIBoneControlType { Animated, Ragdoll, RagdollToAnim }
                 _animator.SetBool(_feedingHash, _feeding);
                 _animator.SetInteger(_seekingHash, _seeking);
                 _animator.SetInteger(_attackHash, _attackType);
+            _animator.SetInteger(_stateHash, (int)_currentStateType);
             }
 
             _satisfaction = Mathf.Max(0, _satisfaction - ((_depletionRate * Time.deltaTime) / 100.0f) * Mathf.Pow(_speed, 3.0f));
@@ -406,13 +408,16 @@ public enum AIBoneControlType { Animated, Ragdoll, RagdollToAnim }
                     }
 
                     NavMeshHit navMeshHit;
+                Vector3 baseOffset = Vector3.zero;
+                if (_navAgent) baseOffset.y = _navAgent.baseOffset;
+
                     if (NavMesh.SamplePosition(newRootPosition, out navMeshHit, 25.0f, NavMesh.AllAreas))
                     {
-                        transform.position = navMeshHit.position;
+                        transform.position = navMeshHit.position + baseOffset;
                     }
                     else
                     {
-                        transform.position = newRootPosition;
+                        transform.position = newRootPosition + baseOffset;
                     }
 
 

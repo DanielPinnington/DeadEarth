@@ -232,7 +232,7 @@ MonoBehaviour:
   _hearing: 1
   _aggression: 0.5
   _health: 100
-  _lowerBodyDamage: 0
+  _lowerBodyDamage: 98
   _upperBodyDamage: 0
   _upperBodyThreshold: 30
   _limpThreshold: 30
@@ -385,6 +385,7 @@ MonoBehaviour:
   _waypointAngleThreshold: 90
   _threatAngleThreshold: 90
   _directionChangeTime: 1
+  _slerpSpeed: 45
 --- !u!114 &95522273
 MonoBehaviour:
   m_ObjectHideFlags: 0
