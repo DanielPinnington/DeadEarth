@@ -16,6 +16,7 @@ public class AIZombieState_Feeding1 : AIZombieState
     int _bloodParticlesBurstAmount = 10;
 
     // Private Fields
+    private int _crawlEatingStateHash = Animator.StringToHash("Crawl Feeding");
     private int _eatingStateHash = Animator.StringToHash("Feeding State");
     private int _eatingLayerIndex = -1;
     private float _timer = 0.0f;
@@ -81,20 +82,24 @@ public class AIZombieState_Feeding1 : AIZombieState
         }
 
         // Is the feeding animation playing now
+        int currentHash = _zombieStateMachine.animator.GetCurrentAnimatorStateInfo(_eatingLayerIndex).shortNameHash;
+        if(currentHash == _eatingStateHash || currentHash == _crawlEatingStateHash)
+        {
         if (_zombieStateMachine.animator.GetCurrentAnimatorStateInfo(_eatingLayerIndex).shortNameHash == _eatingStateHash)
         {
             _zombieStateMachine.satisfaction = Mathf.Min(_zombieStateMachine.satisfaction + ((Time.deltaTime * _zombieStateMachine.replenishRate) / 100.0f), 1.0f);
-            if (GameSceneManager.instance && GameSceneManager.instance.bloodParticles && _bloodParticlesMount)
-            {
-                if (_timer > _bloodParticlesBurstTime)
+                if (GameSceneManager.instance && GameSceneManager.instance.bloodParticles && _bloodParticlesMount)
                 {
-                    ParticleSystem system = GameSceneManager.instance.bloodParticles;
-                    system.transform.position = _bloodParticlesMount.transform.position;
-                    system.transform.rotation = _bloodParticlesMount.transform.rotation;
-                    var settings = system.main;
-                    settings.simulationSpace = ParticleSystemSimulationSpace.World;
-                    system.Emit(_bloodParticlesBurstAmount);
-                    _timer = 0.0f;
+                    if (_timer > _bloodParticlesBurstTime)
+                    {
+                        ParticleSystem system = GameSceneManager.instance.bloodParticles;
+                        system.transform.position = _bloodParticlesMount.transform.position;
+                        system.transform.rotation = _bloodParticlesMount.transform.rotation;
+                        var settings = system.main;
+                        settings.simulationSpace = ParticleSystemSimulationSpace.World;
+                        system.Emit(_bloodParticlesBurstAmount);
+                        _timer = 0.0f;
+                    }
                 }
 
             }
