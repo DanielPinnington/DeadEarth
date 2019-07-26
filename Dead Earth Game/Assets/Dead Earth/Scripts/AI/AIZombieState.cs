@@ -41,6 +41,7 @@ public abstract class AIZombieState : AIState
     {
         if (stateMachine.GetType() == typeof(AIZombieStateMachine))
         {
+
             base.SetStateMachine(stateMachine);
             _zombieStateMachine = (AIZombieStateMachine)stateMachine;
 
@@ -91,6 +92,7 @@ public abstract class AIZombieState : AIState
             else
             if (other.CompareTag("Flash Light") && curType != AITargetType.Visual_Player)
             {
+
                 BoxCollider flashLightTrigger = (BoxCollider)other;
                 float distanceToThreat = Vector3.Distance(_zombieStateMachine.sensorPosition, flashLightTrigger.transform.position);
                 float zSize = flashLightTrigger.size.z * flashLightTrigger.transform.lossyScale.z;
