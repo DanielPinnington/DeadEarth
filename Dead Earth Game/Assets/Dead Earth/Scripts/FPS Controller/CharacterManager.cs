@@ -10,6 +10,11 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] private float _health = 100.0f;
     [SerializeField] private int _ammo = 6;
     [SerializeField] private int _maxAmmo = 6;
+    [SerializeField] private AISoundEmitter _soundEmitter = null;
+    [SerializeField] private float _runRadius = 7.0f;
+    [SerializeField] private float _walkRadius = 0.0f;
+    [SerializeField] private float _landingRadius = 12.0f;
+    [SerializeField] private float _bloodRadiusScale = 6.0f;
 
     public AudioSource _shootSound = null;
     public AudioSource _emptyGun = null;
@@ -75,7 +80,7 @@ public class CharacterManager : MonoBehaviour
             if (stateMachine)
             {
                 Debug.Log("This has worked");
-                stateMachine.TakeDamage(hit.point, ray.direction * 1.0f, 25, hit.rigidbody, this, 0);
+                stateMachine.TakeDamage(hit.point, ray.direction * 1.0f, 50, hit.rigidbody, this, 0);
             }
         }
 
@@ -103,6 +108,18 @@ public class CharacterManager : MonoBehaviour
             _reloadGun.Play();
             _ammo = _maxAmmo;
             print("Bullets currently: " + _ammo);
+        }
+
+        if (_fpsController)
+        {
+            //Bloodradius = zombies can smell player when low health!
+            float newRadius = Mathf.Max(_walkRadius, (100.0f - _health)/_bloodRadiusScale);
+            switch (_fpsController.movementStatus)
+            {
+                case PlayerMoveStatus.Landing: newRadius = Mathf.Max(newRadius, _landingRadius); break;
+                case PlayerMoveStatus.Running: newRadius = Mathf.Max(newRadius, _runRadius); break;
+            }
+            _soundEmitter.SetRadius(newRadius);
         }
         Debug.Log("" + _ammo);
     }
