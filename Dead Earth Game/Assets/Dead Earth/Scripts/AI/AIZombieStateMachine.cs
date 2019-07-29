@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public enum AIBoneControlType { Animated, Ragdoll, RagdollToAnim }
+public enum AIScreamPosition { Entity, Player}
 
 // ----------------------------------------------------------------
 // Class	:	BodyPartSnapshot
@@ -37,6 +38,12 @@ public class AIZombieStateMachine : AIStateMachine
     [SerializeField] [Range(0, 100)] int _crawlThreshold = 90;
     [SerializeField] [Range(0.0f, 1.0f)] float _intelligence = 0.5f;
     [SerializeField] [Range(0.0f, 1.0f)] float _satisfaction = 1.0f;
+    [SerializeField] [Range(0.0f, 1.0f)] float _screamChance = 1.0f;
+    [SerializeField] [Range(0.0f, 1.0f)] float _screamRadius = 20.0f;
+    [SerializeField] AIScreamPosition _screamPosition = AIScreamPosition.Entity;
+    [SerializeField] AISoundEmitter _screamPrefab = null;
+
+
     [SerializeField] float _replenishRate = 0.5f;
     [SerializeField] float _depletionRate = 0.1f;
     [SerializeField] float _reanimationBlendTime = 1.5f;
@@ -50,6 +57,7 @@ public class AIZombieStateMachine : AIStateMachine
     private bool _crawling = false;
     private int _attackType = 0;
     private float _speed = 0.0f;
+    private float _isScreaming = 0.0f;
 
     // Ragdoll Stuff
     private AIBoneControlType _boneControlType = AIBoneControlType.Animated;
@@ -67,6 +75,8 @@ public class AIZombieStateMachine : AIStateMachine
     private int _feedingHash = Animator.StringToHash("Feeding");
     private int _attackHash = Animator.StringToHash("Attack");
     private int _crawlingHash = Animator.StringToHash("Crawling");
+    private int _screamingHash = Animator.StringToHash("Screaming");
+    private int _screamHash = Animator.StringToHash("Scream");
     private int _hitTriggerHash = Animator.StringToHash("Hit");
     private int _hitTypeHash = Animator.StringToHash("HitType");
     private int _lowerBodyDamageHash = Animator.StringToHash("Lower Body Damage");
@@ -98,6 +108,30 @@ public class AIZombieStateMachine : AIStateMachine
     public bool isCrawling
     {
         get { return (_lowerBodyDamage >= _crawlThreshold); }
+    }
+
+    public bool isScreaming
+    {
+        get { return _isScreaming > 0.1f; }
+    }
+    //Set the trigger to cause screaming
+    public bool Scream()
+    {
+        if (isScreaming) return true;
+        if (_animator == null || _cinematicEnabled || _screamPrefab == null) return false;
+
+        _animator.SetTrigger(_screamHash);
+        Vector3 spawnPos = _screamPosition == AIScreamPosition.Entity ? transform.position : VisualThreat.position;
+        AISoundEmitter screamEmitter = Instantiate(_screamPrefab, spawnPos, Quaternion.identity) as AISoundEmitter;
+
+        if (screamEmitter != null)
+            screamEmitter.SetRadius(_screamRadius);
+        return true;
+    }
+
+    public float screamChance
+    {
+        get { return _screamChance; }
     }
 
     protected override void Start()
@@ -141,6 +175,9 @@ public class AIZombieStateMachine : AIStateMachine
             _animator.SetInteger(_seekingHash, _seeking);
             _animator.SetInteger(_attackHash, _attackType);
             _animator.SetInteger(_stateHash, (int)_currentStateType);
+
+            //Are we screaming or not?!?!
+            _isScreaming = _cinematicEnabled ? 0.0f : _animator.GetFloat(_screamHash);
         }
 
         _satisfaction = Mathf.Max(0, _satisfaction - ((_depletionRate * Time.deltaTime) / 100.0f) * Mathf.Pow(_speed, 3.0f));

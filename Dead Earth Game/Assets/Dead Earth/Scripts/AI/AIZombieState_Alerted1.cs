@@ -47,7 +47,7 @@ public class AIZombieState_Alerted1 : AIZombieState
 
         _timer = _maxDuration;
         _directionChangeTimer = 0.0f;
-        //_screamChance = _zombieStateMachine.screamChance - Random.value;
+        _screamChance = _zombieStateMachine.screamChance - Random.value;
     }
 
     // ---------------------------------------------------------------------
@@ -75,12 +75,12 @@ public class AIZombieState_Alerted1 : AIZombieState
 
             if (_screamChance > 0.0f && Time.time > _nextScream)
             {
-               // if (_zombieStateMachine.Scream())
-               // {
-                //    _screamChance = float.MinValue;
-               //     _nextScream = Time.time + _screamFrequency;
-               //     return AIStateType.Alerted;
-               // }
+                if (_zombieStateMachine.Scream())
+                {
+                    _screamChance = float.MinValue;
+                    _nextScream = Time.time + _screamFrequency;
+                    return AIStateType.Alerted;
+                }
             }
 
             return AIStateType.Pursuit;

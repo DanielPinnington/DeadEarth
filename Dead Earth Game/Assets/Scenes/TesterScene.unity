@@ -8830,6 +8830,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Omni Zombie Butcher
       objectReference: {fileID: 0}
+    - target: {fileID: 1766052115712872566, guid: 7fd7a48636490824ea1ac41fc1339b45,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4399689435475254071, guid: 7fd7a48636490824ea1ac41fc1339b45,
         type: 3}
       propertyPath: m_Layer
@@ -9510,6 +9515,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 3707289349951458532, guid: 7fd7a48636490824ea1ac41fc1339b45,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 7dd588782b7240841848bbbf3787c75d, type: 2}
     - target: {fileID: 1766052114601922895, guid: 7fd7a48636490824ea1ac41fc1339b45,
         type: 3}
       propertyPath: _bloodParticlesMount
@@ -9593,6 +9603,76 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsTrigger
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518882532338985342, guid: f34b36a4adf04954096164a83483fc3e,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: -0.0037583918
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518882533900250457, guid: f34b36a4adf04954096164a83483fc3e,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: -0.0037583965
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518882532267973490, guid: f34b36a4adf04954096164a83483fc3e,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: 0.007909801
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518882532275000736, guid: f34b36a4adf04954096164a83483fc3e,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: 0.007910487
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518882532468467744, guid: f34b36a4adf04954096164a83483fc3e,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: 0.000000082393896
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518882532468467744, guid: f34b36a4adf04954096164a83483fc3e,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: 0.0029325848
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518882532545522222, guid: f34b36a4adf04954096164a83483fc3e,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: -3.977206e-14
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518882532545522222, guid: f34b36a4adf04954096164a83483fc3e,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: 0.12793082
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518882532149891342, guid: f34b36a4adf04954096164a83483fc3e,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: -0.029913714
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518882533597724360, guid: f34b36a4adf04954096164a83483fc3e,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: -0.029913714
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518882534004614506, guid: f34b36a4adf04954096164a83483fc3e,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: -0.00000035179207
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518882534004614506, guid: f34b36a4adf04954096164a83483fc3e,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: 0.0000017434359
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518882532383198601, guid: f34b36a4adf04954096164a83483fc3e,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: -0.00000019156035
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518882532383198601, guid: f34b36a4adf04954096164a83483fc3e,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: 0.0000017248094
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f34b36a4adf04954096164a83483fc3e, type: 3}
