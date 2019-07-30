@@ -230,6 +230,24 @@ public abstract class AIStateMachine : MonoBehaviour
         }
     }
 
+    // ------------------------------------------------------------------------------
+    // Name	:	SetStateOverride
+    // Desc	:	This method allows any external method to force the AI out of its
+    //			current state and into the state specified
+    // ------------------------------------------------------------------------------
+    public void SetStateOverride(AIStateType state)
+    {
+        // Set the current state
+        if (state != _currentStateType && _states.ContainsKey(state))
+        {
+            if (_currentState != null)
+                _currentState.OnExitState();
+
+            _currentState = _states[state];
+            _currentStateType = state;
+            _currentState.OnEnterState();
+        }
+    }
 
     // -----------------------------------------------------------------------------
     // Name	:	GetWaypointPosition
@@ -516,7 +534,7 @@ public abstract class AIStateMachine : MonoBehaviour
         _rootPositionRefCount += rootPosition;
         _rootRotationRefCount += rootRotation;
 
-        Debug.Log("Adding Root Motion Request " + rootPosition + "   and    " + rootRotation);
+        //Debug.Log("Adding Root Motion Request "+rootPosition+"   and    "+rootRotation);
     }
 
 

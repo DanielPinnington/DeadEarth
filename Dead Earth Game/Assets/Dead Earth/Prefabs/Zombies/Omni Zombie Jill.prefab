@@ -27,7 +27,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.11311039, y: -0.13621567, z: -0.0037576582}
+  m_ConnectedAnchor: {x: -0.11311038, y: -0.13621567, z: -0.0037583918}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -102,7 +102,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.21562235, y: 0.274075, z: -0.029915458}
+  m_ConnectedAnchor: {x: 0.21562241, y: 0.274075, z: -0.029913714}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -177,7 +177,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.32719973, y: -0.00000035179212, z: 0.00000014156105}
+  m_ConnectedAnchor: {x: 0.3271998, y: -0.00000035161744, z: 0.0000017434359}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 1, z: 0}
   m_TwistLimitSpring:
@@ -266,7 +266,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.31589213, y: -0.00000019156047, z: 0.00000032410028}
+  m_ConnectedAnchor: {x: -0.31589213, y: -0.00000019156035, z: 0.0000017248094}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 1, z: 0}
   m_TwistLimitSpring:
@@ -369,7 +369,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.11311039, y: -0.13621564, z: -0.0037576582}
+  m_ConnectedAnchor: {x: 0.11311035, y: -0.13621564, z: -0.0037583965}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -458,7 +458,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.0011690315, y: -0.36544636, z: 0.007908082}
+  m_ConnectedAnchor: {x: -0.0011690538, y: -0.36544636, z: 0.007909801}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -772,7 +772,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -6.819366e-14, y: 0.48368594, z: 0.127932}
+  m_ConnectedAnchor: {x: -0.00000001519167, y: 0.48368594, z: 0.12793082}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -846,7 +846,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.21562979, y: 0.27409747, z: -0.029915435}
+  m_ConnectedAnchor: {x: -0.21562983, y: 0.27409747, z: -0.029913714}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -1111,7 +1111,7 @@ MonoBehaviour:
   _intelligence: 1
   _satisfaction: 0.249
   _screamChance: 1
-  _screamRadius: 20
+  _screamRadius: 1
   _screamPosition: 1
   _screamPrefab: {fileID: 567607586426412755, guid: 8b5cc8903c29f214ab281e25759b161f,
     type: 3}
@@ -1171,7 +1171,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0010556267, y: -0.3654467, z: 0.007909369}
+  m_ConnectedAnchor: {x: 0.0010556863, y: -0.3654467, z: 0.007910487}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -1275,7 +1275,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.00000008239387, y: 0.2579087, z: 0.0029314458}
+  m_ConnectedAnchor: {x: 0.000000067202436, y: 0.2579087, z: 0.0029325848}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -1411,11 +1411,6 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: b878ba6c5e3c7fd43b3eb4b1e24daa4e, type: 2}
     - target: {fileID: -6057140222963153312, guid: d70e66c4ad591a54797f72490726d8a1,
         type: 3}
-      propertyPath: m_ApplyRootMotion
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -6057140222963153312, guid: d70e66c4ad591a54797f72490726d8a1,
-        type: 3}
       propertyPath: m_WarningMessage
       value: "\nBinding warning: Some generic clip(s) animate transforms that are
         already bound by a Humanoid avatar. These transforms can only be changed by
@@ -1423,11 +1418,6 @@ PrefabInstance:
         'Neck'\n\tTransform 'LeftHandRing2'\n\tTransform 'RightHandIndex3'\n\tTransform
         'LeftHandRing3'\n\tTransform 'RightHandMiddle1'\n\tTransform 'LeftUpLeg'\n\tTransform
         'LeftHandIndex2'\n\tand more ...\n\tFrom animation clip 'mixamo.com'"
-      objectReference: {fileID: 0}
-    - target: {fileID: -6057140222963153312, guid: d70e66c4ad591a54797f72490726d8a1,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -6222830087279353882, guid: d70e66c4ad591a54797f72490726d8a1,
         type: 3}

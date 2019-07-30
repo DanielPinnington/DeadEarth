@@ -4,29 +4,29 @@ using UnityEngine;
 
 public class AISoundEmitter : MonoBehaviour
 {
-    //Inspector Assigned
-
+    // Inspector Assigned
     [SerializeField] private float _decayRate = 1.0f;
 
-    //Internal
+    // Internal
     private SphereCollider _collider = null;
-    private float _srsRadius = 0.0f;
+    private float _srcRadius = 0.0f;
     private float _tgtRadius = 0.0f;
     private float _interpolator = 0.0f;
     private float _interpolatorSpeed = 0.0f;
 
-    void Start()
+    // Use this for initialization
+    void Awake()
     {
-        //Cache collider reference
+        // Cache Collider Reference
         _collider = GetComponent<SphereCollider>();
         if (!_collider) return;
 
-        //set radius values
-        _srsRadius = _tgtRadius = _collider.radius;
+        // Set Radius Values
+        _srcRadius = _tgtRadius = _collider.radius;
 
-        //set interpolator
+        // Setup Interpolator
         _interpolator = 0.0f;
-        if (_decayRate > 0.0f)
+        if (_decayRate > 0.02f)
             _interpolatorSpeed = 1.0f / _decayRate;
         else
             _interpolatorSpeed = 0.0f;
@@ -35,21 +35,20 @@ public class AISoundEmitter : MonoBehaviour
     void FixedUpdate()
     {
         if (!_collider) return;
+
         _interpolator = Mathf.Clamp01(_interpolator + Time.deltaTime * _interpolatorSpeed);
-        _collider.radius = Mathf.Lerp(_srsRadius, _tgtRadius, _interpolator);
+        _collider.radius = Mathf.Lerp(_srcRadius, _tgtRadius, _interpolator);
 
-        if (_collider.radius < Mathf.Epsilon)
-
-            _collider.enabled = false;
-        else
-            _collider.enabled = true;
+        if (_collider.radius < Mathf.Epsilon) _collider.enabled = false;
+        else _collider.enabled = true;
     }
 
     public void SetRadius(float newRadius, bool instantResize = false)
     {
         if (!_collider || newRadius == _tgtRadius) return;
-        _srsRadius = (instantResize || newRadius > _collider.radius)?newRadius:_collider.radius;
+        _srcRadius = (instantResize || newRadius > _collider.radius) ? newRadius : _collider.radius;
         _tgtRadius = newRadius;
         _interpolator = 0.0f;
+
     }
 }

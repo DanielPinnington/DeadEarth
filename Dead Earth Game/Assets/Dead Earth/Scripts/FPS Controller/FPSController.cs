@@ -155,6 +155,28 @@ public class FPSController : MonoBehaviour
     public float walkSpeed { get { return _walkSpeed; } }
     public float runSpeed { get { return _runSpeed; } }
 
+    float _dragMultiplier = 1.0f;
+    float _dragMultiplierLimit = 1.0f;
+    [SerializeField] [Range(0.0f, 1.0f)] float _npcStickiness = 0.5f;
+
+    public float dragMultiplierLimit
+    {
+        get { return _dragMultiplierLimit; }
+        set { _dragMultiplierLimit = Mathf.Clamp01(value); }
+    }
+
+    public float dragMultiplier
+    {
+        get { return _dragMultiplier; }
+        set { _dragMultiplier = Mathf.Clamp01(value); }
+
+    }
+
+    public CharacterController characterController
+    {
+        get { return _characterController; }
+    }
+
 
     protected void Start()
     {
@@ -239,7 +261,7 @@ public class FPSController : MonoBehaviour
 
         _previouslyGrounded = _characterController.isGrounded;
 
-
+        _dragMultiplier = Mathf.Min(_dragMultiplier + Time.deltaTime, _dragMultiplierLimit);
     }
 
     protected void FixedUpdate()
@@ -266,8 +288,8 @@ public class FPSController : MonoBehaviour
             desiredMove = Vector3.ProjectOnPlane(desiredMove, hitInfo.normal).normalized;
 
         // Scale movement by our current speed (walking value or running value)
-        _moveDirection.x = desiredMove.x * speed;
-        _moveDirection.z = desiredMove.z * speed;
+        _moveDirection.x = desiredMove.x * speed * _dragMultiplier;
+        _moveDirection.z = desiredMove.z * speed * _dragMultiplier;
 
         // If grounded
         if (_characterController.isGrounded)
@@ -312,5 +334,10 @@ public class FPSController : MonoBehaviour
 
         AudioSources[_audioToUse].Play();
         _audioToUse = (_audioToUse == 0) ? 1 : 0;
+    }
+
+    public void DoStickiness()
+    {
+        _dragMultiplier = 1.0f - _npcStickiness;
     }
 }
