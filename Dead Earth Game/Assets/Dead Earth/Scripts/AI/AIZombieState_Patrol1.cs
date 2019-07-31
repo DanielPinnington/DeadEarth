@@ -46,7 +46,7 @@ public class AIZombieState_Patrol1 : AIZombieState
         _zombieStateMachine.navAgent.SetDestination(_zombieStateMachine.GetWaypointPosition(false));
 
         // Make sure NavAgent is switched on
-        _zombieStateMachine.navAgent.Resume();
+        _zombieStateMachine.navAgent.isStopped = false;
     }
 
 
