@@ -25,7 +25,147 @@ SketchUpImporter:
     scenes: []
   serializedVersion: 25
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: 212px-SpeedingUp
+    second: {fileID: 2800000, guid: 49a4c01b538b78647961bcaf9559f26e, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Amm-o-matic_tint0x839794FF
+    second: {fileID: 2800000, guid: 6472e13b65509474eb46e9dd006240a3, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: CoDWaW_Dempsey
+    second: {fileID: 2800000, guid: a0ee80c505c9a7945b7f717e43349b88, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: CoDWaW_Nikolai
+    second: {fileID: 2800000, guid: 558a13bbad3f3764c900381cbecb8c73, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: CoDWaW_Richtofen
+    second: {fileID: 2800000, guid: 7f47563e90a05cf4eb33c1fee3842d39, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2800000, guid: 212ec941f46f4a749ac7bfd760ea4992, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Speed Cola Backing
+    second: {fileID: 2800000, guid: 608259fdfb544a244899d01b720d3bba, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: SpeedColaBottle
+    second: {fileID: 2800000, guid: d92145fb0e899c547a03fc936fd57f38, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: _1
+    second: {fileID: 2800000, guid: d419168738be668449d09d93d151e719, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: _2
+    second: {fileID: 2800000, guid: 33fc7cb19e8dcf54098df0dec9cf1290, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: _2#2
+    second: {fileID: 2800000, guid: 89a0e0fb5d6a820418435e99fb97a19f, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: _2#3
+    second: {fileID: 2800000, guid: b3cee477f8e115d4791a9110fe428f52, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: _2_tint0x865A50FF
+    second: {fileID: 2800000, guid: 14c9a882f6128484988334cfb3ffa55d, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: _2_tint0x8E5C51FF
+    second: {fileID: 2800000, guid: 0737bdc39846ade40933647bb71ed3ab, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: _2_tint0x925C50FF
+    second: {fileID: 2800000, guid: 0f2d2ed08d1b9cb4ab1546c84591ef0f, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: _2_tint0xC5C3C1FF
+    second: {fileID: 2800000, guid: 5735f88df63a6af4eaeaee89b4f2ee44, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: _7_tint0x324B56FF
+    second: {fileID: 2800000, guid: d31d6901b01fdaf4d913ed5d4beadb77, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: _9
+    second: {fileID: 2800000, guid: dcf69a3926dea40419291ced2c563876, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: _9_tint0x646B5FFF
+    second: {fileID: 2800000, guid: a10dcbc92c419694fb6509120f7185b0, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: concrete@dirty_basewall_wgc_th
+    second: {fileID: 2800000, guid: 22f059b9a9f884b44ab1a7aec733fdff, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: doubletaprootbeer_tint0x604C30FF
+    second: {fileID: 2800000, guid: 8bccef822c1947e4b9061d320a7eb55c, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: juggernog_tint0x5D4945FF
+    second: {fileID: 2800000, guid: 207fb1de50d07e34683a64cfa1d00549, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: new packa punch machine photo
+    second: {fileID: 2800000, guid: 05c24fcff7da2f3439113d6da24c3cb7, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: q.r 4_tint0x354449FF
+    second: {fileID: 2800000, guid: 123b8b77c1ea8354fa492b17819cd678, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: q.r 4_tint0x8E8E8EFF
+    second: {fileID: 2800000, guid: f7fbe2f8e32d8314982da380552d540a, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: quickrevive texture
+    second: {fileID: 2800000, guid: 8fd1d4b0d6769984db98974c6066ad9c, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: speedcola
+    second: {fileID: 2800000, guid: 245ccd579f7c12d49992b1af005a2484, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: whttbbt.obj
+    second: {fileID: 2800000, guid: 96bcf6233ffff1849b0deb61efb2042c, type: 3}
   materials:
     importMaterials: 1
     materialName: 2
