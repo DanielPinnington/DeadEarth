@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CinematicEnabler : AIStateMachineLink
+public class LayerEnabler : AIStateMachineLink
 {
     public bool OnEnter = false;
     public bool OnExit = false;
@@ -15,7 +15,7 @@ public class CinematicEnabler : AIStateMachineLink
     override public void OnStateEnter(Animator animator, AnimatorStateInfo animStateInfo, int layerIndex)
     {
         if (_stateMachine)
-            _stateMachine.cinematicEnabled = OnEnter;
+            _stateMachine.SetLayerActive(animator.GetLayerName(layerIndex), OnEnter);
     }
 
     // --------------------------------------------------------
@@ -26,7 +26,7 @@ public class CinematicEnabler : AIStateMachineLink
     override public void OnStateExit(Animator animator, AnimatorStateInfo animStateInfo, int layerIndex)
     {
         if (_stateMachine)
-            _stateMachine.cinematicEnabled = OnExit;
+            _stateMachine.SetLayerActive(animator.GetLayerName(layerIndex), OnExit);
     }
 
 }

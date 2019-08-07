@@ -34,6 +34,7 @@ public class AudioPoolItem
 }
 
 
+
 // ----------------------------------------------------------------------------------------
 // CLASS	:	AudioManager
 // DESC		: 	Provides pooled one-shot functionality with priority system and also
@@ -63,6 +64,7 @@ public class AudioManager : MonoBehaviour
     Dictionary<string, TrackInfo> _tracks = new Dictionary<string, TrackInfo>();
     List<AudioPoolItem> _pool = new List<AudioPoolItem>();
     Dictionary<ulong, AudioPoolItem> _activePool = new Dictionary<ulong, AudioPoolItem>();
+    List<LayeredAudioSource> _layeredAudio = new List<LayeredAudioSource>();
     ulong _idGiver = 0;
     Transform _listenerPos = null;
 
@@ -137,7 +139,11 @@ public class AudioManager : MonoBehaviour
 
     void Update()
     {
-
+        // Update any layered audio sources
+        foreach (LayeredAudioSource las in _layeredAudio)
+        {
+            if (las != null) las.Update();
+        }
     }
 
     // ------------------------------------------------------------------------------
@@ -331,12 +337,71 @@ public class AudioManager : MonoBehaviour
 
 
     // -------------------------------------------------------------------------------
-    // Name	:	PlayOneShotSound
+    // Name	:	PlayOneShotSoundDelayed
     // Desc	:	Queue up a one shot sound to be played after a number of seconds
     // -------------------------------------------------------------------------------
-    public IEnumerator PlayOneShotSound(string track, AudioClip clip, Vector3 position, float volume, float spatialBlend, float duration, int priority = 128)
+    public IEnumerator PlayOneShotSoundDelayed(string track, AudioClip clip, Vector3 position, float volume, float spatialBlend, float duration, int priority = 128)
     {
         yield return new WaitForSeconds(duration);
         PlayOneShotSound(track, clip, position, volume, spatialBlend, priority);
+    }
+    // -------------------------------------------------------------------------------
+    // Name	:	RegisterLayeredAudioSource
+    // Desc	:
+    // -------------------------------------------------------------------------------
+    public ILayeredAudioSource RegisterLayeredAudioSource(AudioSource source, int layers)
+    {
+        if (source != null && layers > 0)
+        {
+            // First check it doesn't exist already and if so just return the source
+            for (int i = 0; i < _layeredAudio.Count; i++)
+            {
+                LayeredAudioSource item = _layeredAudio[i];
+                if (item != null)
+                {
+                    if (item.audioSource == source)
+                    {
+                        return item;
+                    }
+                }
+            }
+
+            // Create a new layered audio item and add it to the managed list
+            LayeredAudioSource newLayeredAudio = new LayeredAudioSource(source, layers);
+            _layeredAudio.Add(newLayeredAudio);
+
+            return newLayeredAudio;
+        }
+
+        return null;
+    }
+
+    // -------------------------------------------------------------------------------
+    // Name	:	UnregisterLayeredAudioSource (Overload)
+    // Desc	:
+    // -------------------------------------------------------------------------------
+    public void UnregisterLayeredAudioSource(ILayeredAudioSource source)
+    {
+        _layeredAudio.Remove((LayeredAudioSource)source);
+    }
+
+    // -------------------------------------------------------------------------------
+    // Name	:	UnregisterLayeredAudioSource (Overload)
+    // Desc	:
+    // -------------------------------------------------------------------------------
+    public void UnregisterLayeredAudioSource(AudioSource source)
+    {
+        for (int i = 0; i < _layeredAudio.Count; i++)
+        {
+            LayeredAudioSource item = _layeredAudio[i];
+            if (item != null)
+            {
+                if (item.audioSource == source)
+                {
+                    _layeredAudio.Remove(item);
+                    return;
+                }
+            }
+        }
     }
 }

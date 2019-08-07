@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public enum AIBoneControlType { Animated, Ragdoll, RagdollToAnim }
-public enum AIScreamPosition { Entity, Player}
+public enum AIScreamPosition { Entity, Player }
 
 // ----------------------------------------------------------------
 // Class	:	BodyPartSnapshot
@@ -39,11 +39,9 @@ public class AIZombieStateMachine : AIStateMachine
     [SerializeField] [Range(0.0f, 1.0f)] float _intelligence = 0.5f;
     [SerializeField] [Range(0.0f, 1.0f)] float _satisfaction = 1.0f;
     [SerializeField] [Range(0.0f, 1.0f)] float _screamChance = 1.0f;
-    [SerializeField] [Range(0.0f, 1.0f)] float _screamRadius = 20.0f;
+    [SerializeField] [Range(0.0f, 50.0f)] float _screamRadius = 20.0f;
     [SerializeField] AIScreamPosition _screamPosition = AIScreamPosition.Entity;
     [SerializeField] AISoundEmitter _screamPrefab = null;
-
-
     [SerializeField] float _replenishRate = 0.5f;
     [SerializeField] float _depletionRate = 0.1f;
     [SerializeField] float _reanimationBlendTime = 1.5f;
@@ -114,11 +112,12 @@ public class AIZombieStateMachine : AIStateMachine
     {
         get { return _isScreaming > 0.1f; }
     }
-    //Set the trigger to cause screaming
+
+    // Set the Trigger to cause screaming
     public bool Scream()
     {
         if (isScreaming) return true;
-        if (_animator == null || _cinematicEnabled || _screamPrefab == null) return false;
+        if (_animator == null || IsLayerActive("Cinematic") || _screamPrefab == null) return false;
 
         _animator.SetTrigger(_screamHash);
         Vector3 spawnPos = _screamPosition == AIScreamPosition.Entity ? transform.position : VisualThreat.position;
@@ -129,6 +128,7 @@ public class AIZombieStateMachine : AIStateMachine
         return true;
     }
 
+    // What is the scream chance of this zombie
     public float screamChance
     {
         get { return _screamChance; }
@@ -138,12 +138,13 @@ public class AIZombieStateMachine : AIStateMachine
     {
         base.Start();
 
-        if (_animator != null) { 
+        if (_animator != null)
+        {
+            // Cache Layer Indices
+            _lowerBodyLayer = _animator.GetLayerIndex("Lower Body");
+            _upperBodyLayer = _animator.GetLayerIndex("Upper Body");
+        }
 
-        //Cache layer indices
-        _lowerBodyLayer = _animator.GetLayerIndex("Lower Body");
-        _upperBodyLayer = _animator.GetLayerIndex("Upper Body");
-    }
         // Create BodyPartSnapShot List
         if (_rootBone != null)
         {
@@ -176,8 +177,9 @@ public class AIZombieStateMachine : AIStateMachine
             _animator.SetInteger(_attackHash, _attackType);
             _animator.SetInteger(_stateHash, (int)_currentStateType);
 
-            //Are we screaming or not?!?!
-            _isScreaming = _cinematicEnabled ? 0.0f : _animator.GetFloat(_screamHash);
+            // Are we screaming or not
+            _isScreaming = IsLayerActive("Cinematic") ? 0.0f : _animator.GetFloat(_screamingHash);
+
         }
 
         _satisfaction = Mathf.Max(0, _satisfaction - ((_depletionRate * Time.deltaTime) / 100.0f) * Mathf.Pow(_speed, 3.0f));
@@ -192,14 +194,25 @@ public class AIZombieStateMachine : AIStateMachine
                 _animator.SetLayerWeight(_lowerBodyLayer, (_lowerBodyDamage > _limpThreshold && _lowerBodyDamage < _crawlThreshold) ? 1.0f : 0.0f);
             }
 
-            if(_upperBodyDamage != -1)
+            if (_upperBodyLayer != -1)
             {
-                animator.SetLayerWeight(_upperBodyLayer, (_upperBodyDamage > _upperBodyThreshold && _lowerBodyDamage < _crawlThreshold) ? 1.0f : 0.0f);
+                _animator.SetLayerWeight(_upperBodyLayer, (_upperBodyDamage > _upperBodyThreshold && _lowerBodyDamage < _crawlThreshold) ? 1.0f : 0.0f);
             }
 
             _animator.SetBool(_crawlingHash, isCrawling);
             _animator.SetInteger(_lowerBodyDamageHash, _lowerBodyDamage);
             _animator.SetInteger(_upperBodyDamageHash, _upperBodyDamage);
+
+            if (_lowerBodyDamage > _limpThreshold && _lowerBodyDamage < _crawlThreshold)
+                SetLayerActive("Lower Body", true);
+            else
+                SetLayerActive("Lower Body", false);
+
+            if (_upperBodyDamage > _upperBodyThreshold && _lowerBodyDamage < _crawlThreshold)
+                SetLayerActive("Upper Body", true);
+            else
+                SetLayerActive("Upper Body", false);
+
         }
     }
 
@@ -212,10 +225,14 @@ public class AIZombieStateMachine : AIStateMachine
         if (GameSceneManager.instance != null && GameSceneManager.instance.bloodParticles != null)
         {
             ParticleSystem sys = GameSceneManager.instance.bloodParticles;
-            sys.transform.position = position;
-            var settings = sys.main;
-            settings.simulationSpace = ParticleSystemSimulationSpace.World;
-            sys.Emit(60);
+
+            if (sys)
+            {
+                sys.transform.position = position;
+                var settings = sys.main;
+                settings.simulationSpace = ParticleSystemSimulationSpace.World;
+                sys.Emit(60);
+            }
         }
 
         float hitStrength = force.magnitude;
@@ -261,9 +278,6 @@ public class AIZombieStateMachine : AIStateMachine
         // Get local space position of attacker
         Vector3 attackerLocPos = transform.InverseTransformPoint(characterManager.transform.position);
 
-        // Get local space position of hit
-        Vector3 hitLocPos = transform.InverseTransformPoint(position);
-
         bool shouldRagdoll = (hitStrength > 1.0f);
 
         if (bodyPart != null)
@@ -288,7 +302,7 @@ public class AIZombieStateMachine : AIStateMachine
             }
         }
 
-        if (_boneControlType != AIBoneControlType.Animated || isCrawling || cinematicEnabled || attackerLocPos.z < 0) shouldRagdoll = true;
+        if (_boneControlType != AIBoneControlType.Animated || isCrawling || IsLayerActive("Cinematic") || attackerLocPos.z < 0) shouldRagdoll = true;
 
         if (!shouldRagdoll)
         {

@@ -25,6 +25,7 @@ public class AudioCollection : ScriptableObject
     public int priority { get { return _priority; } }
     public int bankCount { get { return _audioClipBanks.Count; } }
 
+
     public AudioClip this[int i]
     {
         get

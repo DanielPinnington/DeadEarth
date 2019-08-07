@@ -65,7 +65,9 @@ public abstract class AIStateMachine : MonoBehaviour
     protected bool _isTargetReached = false;
     protected List<Rigidbody> _bodyParts = new List<Rigidbody>();
     protected int _aiBodyPartLayer = -1;
-    protected bool _cinematicEnabled = false;
+
+    // Animation Layer Manager
+    protected Dictionary<string, bool> _animLayersActive = new Dictionary<string, bool>();
 
     // Protected Inspector Assigned
     [SerializeField] protected AIStateType _currentStateType = AIStateType.Idle;
@@ -79,7 +81,8 @@ public abstract class AIStateMachine : MonoBehaviour
     [SerializeField]
     [Range(0, 15)] protected float _stoppingDistance = 1.0f;
 
-
+    //Layerd audio control
+    protected ILayeredAudioSource _layeredAudioSource = null;
     // Component Cache
     protected Animator _animator = null;
     protected NavMeshAgent _navAgent = null;
@@ -130,10 +133,20 @@ public abstract class AIStateMachine : MonoBehaviour
                 return -1;
         }
     }
-    public bool cinematicEnabled
+
+    public void SetLayerActive(string layerName, bool active)
     {
-        get { return _cinematicEnabled; }
-        set { _cinematicEnabled = value; }
+        _animLayersActive[layerName] = active;
+    }
+
+    public bool IsLayerActive(string layerName)
+    {
+        bool result;
+        if (_animLayersActive.TryGetValue(layerName, out result))
+        {
+            return result;
+        }
+        return false;
     }
 
     // -----------------------------------------------------------------
