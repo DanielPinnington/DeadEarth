@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d204ad08c0144e848afd4795bc92b47b, type: 3}
+  m_Name: Zombie Roaming Noises
+  m_EditorClassIdentifier: 
+  _audioGroup: Zombies
+  _volume: 1
+  _spatialBlend: 1
+  _priority: 256
+  _audioClipBanks:
+  - clips:
+    - {fileID: 8300000, guid: 196ed9b2df6f39f43a51a25fd5050f97, type: 3}
+    - {fileID: 8300000, guid: 506a3a1a34b049843a3951b7e0bab8b9, type: 3}
+    - {fileID: 8300000, guid: 07f512c7be1761e418fe3d6aa6c086da, type: 3}
+    - {fileID: 8300000, guid: 8dce0d6d61c775e4580d6c44dbb50fea, type: 3}
+    - {fileID: 8300000, guid: 18757c6c423cdb548b4265878d18f4c8, type: 3}
+    - {fileID: 8300000, guid: c543cb73528ec024fb9f1fbcb89fb8d8, type: 3}
