@@ -353,6 +353,10 @@ public class AIZombieStateMachine : AIStateMachine
             if (_animator) _animator.enabled = false;
             if (_collider) _collider.enabled = false;
 
+            // Mute Audio While Ragdoll is happening
+            if (_layeredAudioSource != null)
+                _layeredAudioSource.Mute(true);
+
             inMeleeRange = false;
 
             foreach (Rigidbody body in _bodyParts)

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d204ad08c0144e848afd4795bc92b47b, type: 3}
+  m_Name: Player Pain
+  m_EditorClassIdentifier: 
+  _audioGroup: Player
+  _volume: 1
+  _spatialBlend: 1
+  _priority: 128
+  _audioClipBanks:
+  - clips:
+    - {fileID: 8300000, guid: f27ad45b8060de745b30b16b39a067a8, type: 3}
+    - {fileID: 8300000, guid: d8f3fa3f3ce94f1468ba24f1c9bc3665, type: 3}

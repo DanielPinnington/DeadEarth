@@ -7,12 +7,15 @@ public class AIDamageTrigger : MonoBehaviour
     [SerializeField] string _parameter = "";
     [SerializeField] int _bloodParticlesBurstAmount = 10;
     [SerializeField] float _damageAmount = 0.1f;
+    [SerializeField] bool _doDamageSound = true;
+    [SerializeField] bool _doPainSound = true;
 
     // Private Variables
     AIStateMachine _stateMachine = null;
     Animator _animator = null;
     int _parameterHash = -1;
     GameSceneManager _gameSceneManager = null;
+    private bool _firstContact = false;
 
     // ------------------------------------------------------------
     // Name	:	Start
@@ -30,6 +33,15 @@ public class AIDamageTrigger : MonoBehaviour
         _parameterHash = Animator.StringToHash(_parameter);
 
         _gameSceneManager = GameSceneManager.instance;
+    }
+
+    void OnTriggerEnter(Collider col)
+    {
+        if (!_animator)
+            return;
+
+        if (col.gameObject.CompareTag("Player") && _animator.GetFloat(_parameterHash) > 0.9f)
+            _firstContact = true;
     }
 
     // -------------------------------------------------------------
@@ -63,9 +75,10 @@ public class AIDamageTrigger : MonoBehaviour
                 PlayerInfo info = _gameSceneManager.GetPlayerInfo(col.GetInstanceID());
                 if (info != null && info.characterManager != null)
                 {
-                    info.characterManager.TakeDamage(_damageAmount);
+                    info.characterManager.TakeDamage(_damageAmount, _doDamageSound && _firstContact, _doPainSound);
                 }
             }
+            _firstContact = false;
         }
     }
 }

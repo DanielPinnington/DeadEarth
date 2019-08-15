@@ -16,6 +16,12 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] private float _landingRadius = 12.0f;
     [SerializeField] private float _bloodRadiusScale = 6.0f;
 
+    //Pain Damage Audio
+    [SerializeField] private AudioCollection _damageSounds      = null;
+    [SerializeField] private AudioCollection _painSounds        = null;
+    [SerializeField] private float           _nextPainSoundTime = 0.0f;
+    [SerializeField] private float           _painSoundOffset   = 0.35f;
+
     public AudioSource _shootSound = null;
     public AudioSource _emptyGun = null;
     public AudioSource _reloadGun = null;
@@ -49,7 +55,7 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(float amount, bool doDamage, bool doPain)
     {
         _health = Mathf.Max(_health - (amount * Time.deltaTime), 0.0f);
 
@@ -60,8 +66,25 @@ public class CharacterManager : MonoBehaviour
 
         if (_cameraBloodEffect != null)
         {
-            _cameraBloodEffect.minBloodAmount = (1.0f - _health / 100.0f);
+            _cameraBloodEffect.minBloodAmount = (1.0f - _health / 100.0f) * 0.5f;
             _cameraBloodEffect.bloodAmount = Mathf.Min(_cameraBloodEffect.minBloodAmount + 0.3f, 1.0f);
+        }
+
+        //Do pain/damage sound
+        if (AudioManager.instance)
+        {
+            if (doDamage && _damageSounds != null)
+                AudioManager.instance.PlayOneShotSound(_damageSounds.audioGroup, _damageSounds.audioClip, transform.position, _damageSounds.volume, _damageSounds.spatialBlend, _damageSounds.priority);
+
+            if(doPain && _painSounds != null && _nextPainSoundTime < Time.time)
+            {
+                AudioClip painClip = _painSounds.audioClip;
+                if (painClip)
+                {
+                    _nextPainSoundTime = Time.time + painClip.length;
+                    StartCoroutine(AudioManager.instance.PlayOneShotSoundDelayed(_painSounds.audioGroup, painClip, transform.position, _painSounds.spatialBlend, _painSoundOffset, _painSounds.priority));
+                }
+            }
         }
     }
 
