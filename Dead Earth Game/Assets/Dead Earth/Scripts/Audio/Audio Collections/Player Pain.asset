@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Player Pain
   m_EditorClassIdentifier: 
   _audioGroup: Player
-  _volume: 1
+  _volume: 0.22
   _spatialBlend: 1
   _priority: 128
   _audioClipBanks:

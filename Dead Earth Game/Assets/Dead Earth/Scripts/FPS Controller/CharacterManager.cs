@@ -15,6 +15,7 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] private float _walkRadius = 0.0f;
     [SerializeField] private float _landingRadius = 12.0f;
     [SerializeField] private float _bloodRadiusScale = 6.0f;
+    [SerializeField] private PlayerHud _playerHUD = null;
 
     //Pain Damage Audio
     [SerializeField] private AudioCollection _damageSounds      = null;
@@ -25,6 +26,8 @@ public class CharacterManager : MonoBehaviour
     public AudioSource _shootSound = null;
     public AudioSource _emptyGun = null;
     public AudioSource _reloadGun = null;
+    public float health { get { return _health; } }
+    public float stamina { get { return _fpsController != null ? _fpsController.stamina : 0.0f; } }
 
     // Private
     private Collider _collider = null;
@@ -53,6 +56,7 @@ public class CharacterManager : MonoBehaviour
 
             _gameSceneManager.RegisterPlayerInfo(_collider.GetInstanceID(), info);
         }
+        if (_playerHUD) _playerHUD.Fade(2.0f, ScreenFadeType.FadeIn);
     }
 
     public void TakeDamage(float amount, bool doDamage, bool doPain)

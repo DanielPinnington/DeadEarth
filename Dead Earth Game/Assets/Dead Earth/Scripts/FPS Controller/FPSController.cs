@@ -9,6 +9,7 @@ public enum CurveControlledBobCallbackType { Horizontal, Vertical }
 // Delegates
 public delegate void CurveControlledBobCallback();
 
+
 [System.Serializable]
 public class CurveControlledBobEvent
 {
@@ -114,7 +115,7 @@ public class CurveControlledBob
 [RequireComponent(typeof(CharacterController))]
 public class FPSController : MonoBehaviour
 {
-    [SerializeField] private AudioCollection _footSteps = null;
+    [SerializeField] private AudioCollection _footsteps = null;
     [SerializeField] private float _crouchAttenuation = 0.2f;
 
     // Inspector Assigned Locomotion Settings
@@ -123,16 +124,15 @@ public class FPSController : MonoBehaviour
     [SerializeField] private float _jumpSpeed = 7.5f;
     [SerializeField] private float _crouchSpeed = 1.0f;
     [SerializeField] private float _staminaDepletion = 5.0f;
-    [SerializeField] private float _staminaRecovery = 10f;
+    [SerializeField] private float _staminaRecovery = 10;
     [SerializeField] private float _stickToGroundForce = 5.0f;
     [SerializeField] private float _gravityMultiplier = 2.5f;
     [SerializeField] private float _runStepLengthen = 0.75f;
     [SerializeField] private CurveControlledBob _headBob = new CurveControlledBob();
     [SerializeField] private GameObject _flashLight = null;
-    [SerializeField] private bool _flashLightOnAtStart = true;
+    [SerializeField] private bool _flashlightOnAtStart = true;
 
     // Use Standard Assets Mouse Look class for mouse input -> Camera Look Control
-    //This is how to move MouseLook
     [SerializeField] private UnityStandardAssets.Characters.FirstPerson.MouseLook _mouseLook = new UnityStandardAssets.Characters.FirstPerson.MouseLook();
 
     // Private internals
@@ -146,7 +146,7 @@ public class FPSController : MonoBehaviour
     private bool _isCrouching = false;
     private Vector3 _localSpaceCameraPos = Vector3.zero;
     private float _controllerHeight = 0.0f;
-    private float _stamina = 100f;
+    private float _stamina = 100;
     private bool _freezeMovement = false;
 
     // Timers
@@ -173,8 +173,7 @@ public class FPSController : MonoBehaviour
     public float dragMultiplier
     {
         get { return _dragMultiplier; }
-        set { _dragMultiplier = Mathf.Clamp01(value); }
-
+        set { _dragMultiplier = Mathf.Min(value, _dragMultiplierLimit); }
     }
 
     public CharacterController characterController
@@ -184,21 +183,14 @@ public class FPSController : MonoBehaviour
 
     public bool freezeMovement
     {
-        get
-        {
-            return _freezeMovement;
-
-        }
-        set
-        {
-            _freezeMovement = value;
-        }
+        get { return _freezeMovement; }
+        set { _freezeMovement = value; }
     }
+
     public float stamina
     {
         get { return _stamina; }
     }
-
 
     protected void Start()
     {
@@ -216,7 +208,7 @@ public class FPSController : MonoBehaviour
         // Reset timers
         _fallingTimer = 0.0f;
 
-        // Setup Mouse Look Script (MouseLook from Standard Assets, move camera attached to character)
+        // Setup Mouse Look Script
         _mouseLook.Init(transform, _camera.transform);
 
         // Initiate Head Bob Object
@@ -224,7 +216,7 @@ public class FPSController : MonoBehaviour
         _headBob.RegisterEventCallback(1.5f, PlayFootStepSound, CurveControlledBobCallbackType.Vertical);
 
         if (_flashLight)
-            _flashLight.SetActive(_flashLightOnAtStart);
+            _flashLight.SetActive(_flashlightOnAtStart);
     }
 
     protected void Update()
@@ -283,11 +275,12 @@ public class FPSController : MonoBehaviour
 
         _previouslyGrounded = _characterController.isGrounded;
 
-        //Calculate Stamina
+        // Calculate Stamina
         if (_movementStatus == PlayerMoveStatus.Running)
             _stamina = Mathf.Max(_stamina - _staminaDepletion * Time.deltaTime, 0.0f);
         else
-            _stamina = Mathf.Min(_stamina - _staminaRecovery * Time.deltaTime, 100.0f);
+            _stamina = Mathf.Min(_stamina + _staminaRecovery * Time.deltaTime, 100.0f);
+
 
         _dragMultiplier = Mathf.Min(_dragMultiplier + Time.deltaTime, _dragMultiplierLimit);
     }
@@ -297,11 +290,11 @@ public class FPSController : MonoBehaviour
         // Read input from axis
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
-        bool waswalking = _isWalking;
+
         _isWalking = !Input.GetKey(KeyCode.LeftShift);
 
         // Set the desired speed to be either our walking speed or our running speed
-        float speed = _isCrouching ? _crouchSpeed : _isWalking ?_walkSpeed : Mathf.Lerp(_walkSpeed, _runSpeed, _stamina / 100.0f);
+        float speed = _isCrouching ? _crouchSpeed : _isWalking ? _walkSpeed : Mathf.Lerp(_walkSpeed, _runSpeed, _stamina / 100.0f); ;
         _inputVector = new Vector2(horizontal, vertical);
 
         // normalize input if it exceeds 1 in combined length:
@@ -355,21 +348,27 @@ public class FPSController : MonoBehaviour
 
     void PlayFootStepSound()
     {
-        if(AudioManager.instance !=null && _footSteps != null)
+        if (AudioManager.instance != null && _footsteps != null)
         {
             AudioClip soundToPlay;
             if (_isCrouching)
-                soundToPlay = _footSteps[1];
+                soundToPlay = _footsteps[1];
             else
-                soundToPlay = _footSteps[0];
+                soundToPlay = _footsteps[0];
 
-            AudioManager.instance.PlayOneShotSound("Player", soundToPlay, transform.position, _isCrouching? _footSteps.volume * _crouchAttenuation : _footSteps.volume, _footSteps.spatialBlend, _footSteps.priority);
-
+            AudioManager.instance.PlayOneShotSound("Player",
+                                                    soundToPlay,
+                                                    transform.position,
+                                                    _isCrouching ? _footsteps.volume * _crouchAttenuation : _footsteps.volume,
+                                                    _footsteps.spatialBlend,
+                                                    _footsteps.priority);
         }
     }
+
 
     public void DoStickiness()
     {
         _dragMultiplier = 1.0f - _npcStickiness;
     }
+
 }

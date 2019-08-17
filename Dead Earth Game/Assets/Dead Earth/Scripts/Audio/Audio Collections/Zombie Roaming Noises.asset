@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Zombie Roaming Noises
   m_EditorClassIdentifier: 
   _audioGroup: Zombies
-  _volume: 1
+  _volume: 0.31
   _spatialBlend: 1
   _priority: 256
   _audioClipBanks:
