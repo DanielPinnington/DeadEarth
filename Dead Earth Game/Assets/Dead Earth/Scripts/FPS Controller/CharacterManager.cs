@@ -35,6 +35,7 @@ public class CharacterManager : MonoBehaviour
     private CharacterController _characterController = null;
     private GameSceneManager _gameSceneManager = null;
     private int _aiBodyPartLayer = -1;
+    private int _interactiveMask = 0;
 
 
     void Start()
@@ -45,6 +46,7 @@ public class CharacterManager : MonoBehaviour
         _gameSceneManager = GameSceneManager.instance;
 
         _aiBodyPartLayer = LayerMask.NameToLayer("AI Body Part");
+        _interactiveMask = 1 << LayerMask.NameToLayer("Interactive");
 
         if (_gameSceneManager != null)
         {
@@ -56,6 +58,10 @@ public class CharacterManager : MonoBehaviour
 
             _gameSceneManager.RegisterPlayerInfo(_collider.GetInstanceID(), info);
         }
+
+        //Get rid of mouse cursor
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         if (_playerHUD) _playerHUD.Fade(2.0f, ScreenFadeType.FadeIn);
     }
 
@@ -121,6 +127,63 @@ public class CharacterManager : MonoBehaviour
 
     void Update()
     {
+
+        Ray ray;
+        RaycastHit hit;
+        RaycastHit[] hits;
+
+        //Process interactive objects
+        //is the crosshair over a useable item or a descriptive item? first get ray from centre of screen
+        ray = _camera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+
+        //calculate ray length
+        float rayLength = Mathf.Lerp(1.0f, 1.8f, Mathf.Abs(Vector3.Dot(_camera.transform.forward, Vector3.up)));
+
+        //cast ray and collect all hits
+        hits = Physics.RaycastAll(ray, rayLength, _interactiveMask);
+
+        //process the hits for the one with the highest priority
+        if (hits.Length > 0)
+        {
+            //used to record index of the highest priority
+            int highestPriority = int.MinValue;
+            InteractiveItem priorityObject = null;
+
+            //Iteracte through each hit
+            for(int i = 0; i < hits.Length; i++)
+            {
+                //process next hit
+                hit = hits[i];
+
+                //fetch its interactiveitem sscript from the database
+                InteractiveItem interactiveObject = _gameSceneManager.GetInteractiveItem(hit.collider.GetInstanceID());
+
+                //if this is the highest priority object so far then remember it
+                if(interactiveObject!= null && interactiveObject.priority > highestPriority)
+                {
+                    priorityObject = interactiveObject;
+                    highestPriority = priorityObject.priority;
+                }
+            }
+
+            //if we found an object then display its text and process any possible activation
+            if (priorityObject != null)
+            {
+                if (_playerHUD)
+                    _playerHUD.SetInteractionText(priorityObject.GetText());
+                if (Input.GetButtonDown("Use"))
+                {
+                    priorityObject.Activate(this);
+                }
+            }
+        }
+        else
+        {
+            if (_playerHUD)
+                _playerHUD.SetInteractionText(null);
+        }
+
+        //are we attacking?!
         if (Input.GetMouseButtonDown(0) && _ammo > 0)
         {
             if (_ammo >= 0)
@@ -143,7 +206,7 @@ public class CharacterManager : MonoBehaviour
             print("Bullets currently: " + _ammo);
         }
 
-        if (_fpsController)
+        if (_fpsController && _soundEmitter!=null)
         {
             //Bloodradius = zombies can smell player when low health!
             float newRadius = Mathf.Max(_walkRadius, (100.0f - _health)/_bloodRadiusScale);
@@ -157,6 +220,7 @@ public class CharacterManager : MonoBehaviour
             _fpsController.dragMultiplierLimit = Mathf.Max(_health / 100.0f, 0.25f);
         }
         Debug.Log("" + _ammo);
+        if (_playerHUD) _playerHUD.Invalidate(this);
     }
 }
 
