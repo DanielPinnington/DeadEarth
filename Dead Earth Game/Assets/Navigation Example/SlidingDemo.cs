@@ -28,6 +28,7 @@ public class SlidingDemo : InteractiveItem
         {
             StartCoroutine(AnimateDoor((_doorState == DoorState.Open) ? DoorState.Closed : DoorState.Open));
             //-score
+
         }
     }
     IEnumerator AnimateDoor (DoorState newState)
@@ -47,5 +48,6 @@ public class SlidingDemo : InteractiveItem
 
         _transform.position = endPos;
         _doorState = newState;
+        Destroy(gameObject);
     }
 }
