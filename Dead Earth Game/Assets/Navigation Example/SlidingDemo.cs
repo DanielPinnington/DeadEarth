@@ -48,6 +48,7 @@ public class SlidingDemo : InteractiveItem
 
         _transform.position = endPos;
         _doorState = newState;
+        yield return new WaitForSeconds(0.05f);
         Destroy(gameObject);
     }
 }
