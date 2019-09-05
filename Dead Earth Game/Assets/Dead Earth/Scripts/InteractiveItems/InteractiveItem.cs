@@ -23,7 +23,7 @@ public class InteractiveItem : MonoBehaviour
         _gameSceneManager = GameSceneManager.instance;
         _collider = GetComponent<Collider>();
 
-        if(_gameSceneManager!=null && _collider != null)
+        if (_gameSceneManager != null && _collider != null)
         {
             _gameSceneManager.RegisterInteractiveItem(_collider.GetInstanceID(), this);
         }

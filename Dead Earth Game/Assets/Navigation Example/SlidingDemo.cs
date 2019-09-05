@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlidingDemo : MonoBehaviour
+public class SlidingDemo : InteractiveItem
 {
     public enum DoorState {  Open, Animating, Closed};
 
@@ -24,9 +24,10 @@ public class SlidingDemo : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && _doorState != DoorState.Animating)
+        if (Input.GetKeyDown(KeyCode.Space) && _doorState != DoorState.Animating ) // && Current score is 750 or more
         {
-            StartCoroutine(AnimateDoor( (_doorState == DoorState.Open) ? DoorState.Closed : DoorState.Open));
+            StartCoroutine(AnimateDoor((_doorState == DoorState.Open) ? DoorState.Closed : DoorState.Open));
+            //-score
         }
     }
     IEnumerator AnimateDoor (DoorState newState)
